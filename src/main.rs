@@ -13,7 +13,8 @@ struct TodoList{
     date: i64,
     title: String,
 }
-
+mod todolist;
+use todolist::service;
 #[get("/")]
 async fn index() -> String {
     "what is your name".to_string()
@@ -29,8 +30,9 @@ async fn main() -> std::io::Result<()> {
         App::new()
         .app_data(app_data.clone())
         .service(index)
+        .configure(service::config)
     })
-    .bind(("127.0.0,1",8000))?
+    .bind(("127.0.0.1",8000))?
     .run()
     .await
 }
